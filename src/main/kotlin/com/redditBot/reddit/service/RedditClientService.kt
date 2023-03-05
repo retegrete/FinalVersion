@@ -4,8 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
+import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 
+@Service
 class RedditClientService {
     fun fetchSubredditImages(subreddit: String, limit: Int): List<String> {
         val url = "https://www.reddit.com/r/$subreddit/hot.json?limit=$limit"
