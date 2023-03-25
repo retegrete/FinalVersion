@@ -27,17 +27,17 @@ class ScheduledTaskRunner(
         val fromPhoneNumber = "whatsapp:$fromNumber" // Replace with your Twilio phone number
 
         GlobalScope.launch {
-            logger.info("Scheduling task to send images via Twilio")
+            logger?.info("Scheduling task to send images via Twilio")
             sendService.scheduleDailyTaskAt(16, 0, ZoneId.of("America/Chicago")) {
                 val image = sendService.getRandomNonRepeatedImage()
                 if (image != null) {
-                    logger.info("Sending image with ID: ${image.id} to $toPhoneNumber")
+                    logger?.info("Sending image with ID: ${image.id} to $toPhoneNumber")
                     sendService.sendImageUrlViaTwilio(image.url, toPhoneNumber, fromPhoneNumber)
-                    logger.info("Sent image with ID: ${image.id}")
+                    logger?.info("Sent image with ID: ${image.id}")
                 } else {
-                    logger.info("All images have been sent. Resetting sent status for all images")
+                    logger?.info("All images have been sent. Resetting sent status for all images")
                     sendService.resetSentStatusForAllImages()
-                    logger.info("Sent status reset for all images")
+                    logger?.info("Sent status reset for all images")
                 }
             }
         }
