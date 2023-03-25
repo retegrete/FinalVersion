@@ -34,7 +34,9 @@ class SendService(private val redditImageRepository: RedditImageRepository) {
         println("Next execution time: $nextExecutionTime")
         println("Delay (ms): $delayMillis")
 
+        println("Starting delay...")
         delay(delayMillis)
+        println("Delay completed, starting task execution loop")
         while (true) {
             task()
             delay(Duration.ofDays(1).toMillis())
