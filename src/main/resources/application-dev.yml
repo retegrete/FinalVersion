@@ -1,0 +1,16 @@
+openai:
+  apiKey: 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
+twilio:
+  accountSid: AC27ff6cc068412bd9ae329ad1ffc9c14c
+  authToken: a7c4185b2b3a812fe45b9f3063839984
+  from: +5215586359153
+  to: +5215549049362
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://ec2-3-93-160-246.compute-1.amazonaws.com:5432/dfa76n11cuu806
+    username: djreunxsyeqehh
+    password: 7df09cc85bf47693de6c1e62932ef3360e9443ca66791510e2829479d9fb7805
+server:
+  port: 8080
+

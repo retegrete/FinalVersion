@@ -1,0 +1,22 @@
+openai:
+  apiKey: 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
+twilio:
+  accountSid: AC27ff6cc068412bd9ae329ad1ffc9c14c
+  authToken: a7c4185b2b3a812fe45b9f3063839984
+  from: +5215586359153
+  whatsapp:
+    number: +5215586359153
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    tomcat:
+      max-active: 10
+      max-idle: 5
+      min-idle: 2
+      initial-size: 5
+      remove-abandoned: true
+
+
+  http:
+    encoding:
+      force-request-content-type: true

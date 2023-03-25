@@ -12,7 +12,7 @@ class RedditImageService(
     fun fetchAndStoreSubredditImages(subreddit: String, limit: Int) {
         val urls = redditClient.fetchSubredditImages(subreddit, limit)
         val redditImages = urls.map {
-            RedditImage(url = it, subreddit = subreddit, title = "N/A")
+            RedditImage(url = it, subreddit = subreddit, title = "N/A", sent = false)
         }
         redditImageRepository.saveAll(redditImages)
     }
