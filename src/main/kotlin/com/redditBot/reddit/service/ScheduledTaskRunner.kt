@@ -28,7 +28,7 @@ class ScheduledTaskRunner(
 
         GlobalScope.launch {
             logger?.info("Scheduling task to send images via Twilio")
-            sendService.scheduleDailyTaskAt(22, 10, ZoneId.of("America/Chicago")) {
+            sendService.scheduleDailyTaskAt(22, 20, ZoneId.of("America/Chicago")) {
                 val image = sendService.getRandomNonRepeatedImage()
                 if (image != null) {
                     logger?.info("Sending image with ID: ${image.id} to $toPhoneNumber")

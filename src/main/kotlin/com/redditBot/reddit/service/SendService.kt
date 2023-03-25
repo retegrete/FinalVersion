@@ -10,10 +10,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withTimeoutOrNull
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import java.time.Duration
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.ZoneId
+import java.time.*
+
 @Service
 class SendService(private val redditImageRepository: RedditImageRepository) {
 
@@ -27,14 +25,19 @@ class SendService(private val redditImageRepository: RedditImageRepository) {
     private lateinit var fromNumber: String
 
     suspend fun scheduleDailyTaskAt(hour: Int, minute: Int, zoneId: ZoneId, task: () -> Unit) {
+        val now = ZonedDateTime.now(zoneId)
+        val targetTime = now.withHour(hour).withMinute(minute).withSecond(0).withNano(0)
+        val nextExecutionTime = if (targetTime.isBefore(now)) targetTime.plusDays(1) else targetTime
+        val delayMillis = Duration.between(now, nextExecutionTime).toMillis()
+
+        println("Current time: $now")
+        println("Next execution time: $nextExecutionTime")
+        println("Delay (ms): $delayMillis")
+
+        delay(delayMillis)
         while (true) {
-            val now = LocalDateTime.now(zoneId)
-            val target = now.with(LocalTime.of(hour, minute)).plusDays(if (now.hour >= hour) 1 else 0)
-            val delayDuration = Duration.between(now, target)
-            withTimeoutOrNull(delayDuration.toMillis()) {
-                delay(delayDuration.toMillis())
-            }
             task()
+            delay(Duration.ofDays(1).toMillis())
         }
     }
 
