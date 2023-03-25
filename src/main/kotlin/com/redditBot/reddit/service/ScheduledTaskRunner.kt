@@ -25,7 +25,7 @@ class ScheduledTaskRunner(
 
     @Value("\${twilio.to}")
     private lateinit var toNumber: String
-    @Scheduled(cron = "0 41 18 * * ?", zone = "America/Chicago")
+    @Scheduled(cron = "0 43 18 * * ?", zone = "America/Chicago")
     fun startScheduledTasks() {
         val toPhoneNumber = "whatsapp:$toNumber" // Replace with the destination phone number
         val fromPhoneNumber = "whatsapp:$fromNumber" // Replace with your Twilio phone number
