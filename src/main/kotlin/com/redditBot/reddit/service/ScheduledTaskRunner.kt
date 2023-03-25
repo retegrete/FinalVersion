@@ -36,8 +36,5 @@ class ScheduledTaskRunner(
             sendService.sendImageUrlViaTwilio(image.url, toPhoneNumber, fromPhoneNumber)
         }
         println("Task completed: ${LocalDateTime.now()}")
-        fun sendImagesTask() {
-
-        }
     }
 }
