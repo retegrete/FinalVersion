@@ -13,8 +13,8 @@ interface RedditImageRepository: JpaRepository<RedditImage, Long>{
     @Query("SELECT * FROM public.images WHERE subreddit = :subreddit", nativeQuery = true)
     fun findMyImage(subreddit: String): List<RedditImage>
 
-    @Query("SELECT r FROM public.images r WHERE r.sent = false ORDER BY RANDOM()", nativeQuery = true)
-    fun getRandomNonRepeatedImage(): RedditImage?
+    @Query("SELECT * FROM public.images WHERE sent = false ORDER BY RANDOM()", nativeQuery = true)
+    fun getRandomNonRepeatedImage(): List<RedditImage?>
 
     @Modifying
     @Query("UPDATE RedditImage r SET r.sent = :sent WHERE r.id = :id", nativeQuery = false)

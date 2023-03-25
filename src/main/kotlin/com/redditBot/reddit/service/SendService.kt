@@ -10,6 +10,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withTimeoutOrNull
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
+import java.net.URI
 import java.time.*
 
 @Service
@@ -35,7 +36,7 @@ class SendService(private val redditImageRepository: RedditImageRepository) {
         println("Delay (ms): $delayMillis")
 
         println("Starting delay...")
-        val intervalMillis = 60_000L // 1 minute
+        val intervalMillis = 10000_000L // 1 minute
         val totalIntervals = delayMillis / intervalMillis
 
         for (i in 1..totalIntervals) {
@@ -55,7 +56,8 @@ class SendService(private val redditImageRepository: RedditImageRepository) {
             PhoneNumber(toPhoneNumber),
             PhoneNumber(fromPhoneNumber),
             imageUrl
-        ).create()
+        ).setMediaUrl(listOf(URI.create(imageUrl)))
+            .create()
 
         println("Sent message: ${message.sid}")
     }
@@ -63,10 +65,10 @@ class SendService(private val redditImageRepository: RedditImageRepository) {
     @Transactional
     fun getRandomNonRepeatedImage(): RedditImage? {
         val image = redditImageRepository.getRandomNonRepeatedImage()
-        if (image != null) {
-            image.id?.let { redditImageRepository.updateSentStatus(it, true) }
+        if (image[0] != null) {
+            image[0]?.id?.let { redditImageRepository.updateSentStatus(it, true) }
         }
-        return image
+        return image[0]
     }
 
     fun resetSentStatusForAllImages() {

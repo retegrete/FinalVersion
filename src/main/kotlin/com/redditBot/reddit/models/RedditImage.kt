@@ -11,8 +11,8 @@ data class RedditImage(
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
-    val url: String,
-    val subreddit: String,
-    val title: String,
-    val sent: Boolean
+    val url: String = "",
+    val subreddit: String ="",
+    val title: String= "",
+    val sent: Boolean = false
 )

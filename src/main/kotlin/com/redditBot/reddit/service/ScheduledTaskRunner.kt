@@ -31,8 +31,12 @@ class ScheduledTaskRunner(
         scope.launch {
             logger?.info("Scheduling task to send images via Twilio")
             println("Launching coroutine...") // Add this line
-            sendService.scheduleDailyTaskAt(22, 44, ZoneId.of("America/Chicago")) {
-                val image = sendService.getRandomNonRepeatedImage()
+            val image = sendService.getRandomNonRepeatedImage()
+            if (image != null) {
+                sendService.sendImageUrlViaTwilio(image.url, toPhoneNumber, fromPhoneNumber)
+            }
+            sendService.scheduleDailyTaskAt(23, 25, ZoneId.of("America/Chicago")) {
+
                 if (image != null) {
                     logger?.info("Sending image with ID: ${image.id} to $toPhoneNumber")
                     sendService.sendImageUrlViaTwilio(image.url, toPhoneNumber, fromPhoneNumber)
