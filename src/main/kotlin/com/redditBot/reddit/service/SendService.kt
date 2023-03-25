@@ -35,7 +35,13 @@ class SendService(private val redditImageRepository: RedditImageRepository) {
         println("Delay (ms): $delayMillis")
 
         println("Starting delay...")
-        delay(delayMillis)
+        val intervalMillis = 60_000L // 1 minute
+        val totalIntervals = delayMillis / intervalMillis
+
+        for (i in 1..totalIntervals) {
+            println("Delay interval $i of $totalIntervals...")
+            delay(intervalMillis)
+        }
         println("Delay completed, starting task execution loop")
         while (true) {
             task()
