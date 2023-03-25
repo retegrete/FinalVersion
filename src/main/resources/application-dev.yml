@@ -4,7 +4,7 @@ twilio:
   accountSid: AC27ff6cc068412bd9ae329ad1ffc9c14c
   authToken: a7c4185b2b3a812fe45b9f3063839984
   from: +5215586359153
-  to: +5215549049362
+  to: +5215529654345
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
