@@ -3,16 +3,18 @@ package com.redditBot.reddit.service
 import jakarta.annotation.PostConstruct
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.slf4j.Logger
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.time.ZoneId
-
+import org.slf4j.LoggerFactory
 @Component
 class ScheduledTaskRunner(
-    private val sendService: SendService
-    private val logger = LoggerFactory.getLogger(ScheduledTaskRunner::class.java)
+    private val sendService: SendService,
+
 // Inject your service here
 ) {
+    private val logger: Logger? = LoggerFactory.getLogger(ScheduledTaskRunner::class.java)
 
     @Value("\${twilio.from}")
     private lateinit var fromNumber: String
@@ -26,7 +28,7 @@ class ScheduledTaskRunner(
 
         GlobalScope.launch {
             logger.info("Scheduling task to send images via Twilio")
-            sendService.scheduleDailyTaskAt(15, 55, ZoneId.of("America/Chicago")) {
+            sendService.scheduleDailyTaskAt(16, 0, ZoneId.of("America/Chicago")) {
                 val image = sendService.getRandomNonRepeatedImage()
                 if (image != null) {
                     logger.info("Sending image with ID: ${image.id} to $toPhoneNumber")
