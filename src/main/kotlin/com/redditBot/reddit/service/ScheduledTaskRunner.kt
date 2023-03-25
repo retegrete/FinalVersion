@@ -9,7 +9,9 @@ import java.time.ZoneId
 
 @Component
 class ScheduledTaskRunner(
-    private val sendService: SendService // Inject your service here
+    private val sendService: SendService
+    private val logger = LoggerFactory.getLogger(ScheduledTaskRunner::class.java)
+// Inject your service here
 ) {
 
     @Value("\${twilio.from}")
@@ -23,12 +25,17 @@ class ScheduledTaskRunner(
         val fromPhoneNumber = "whatsapp:$fromNumber" // Replace with your Twilio phone number
 
         GlobalScope.launch {
-            sendService.scheduleDailyTaskAt(15, 40, ZoneId.of("America/Chicago")) {
+            logger.info("Scheduling task to send images via Twilio")
+            sendService.scheduleDailyTaskAt(15, 55, ZoneId.of("America/Chicago")) {
                 val image = sendService.getRandomNonRepeatedImage()
                 if (image != null) {
+                    logger.info("Sending image with ID: ${image.id} to $toPhoneNumber")
                     sendService.sendImageUrlViaTwilio(image.url, toPhoneNumber, fromPhoneNumber)
+                    logger.info("Sent image with ID: ${image.id}")
                 } else {
+                    logger.info("All images have been sent. Resetting sent status for all images")
                     sendService.resetSentStatusForAllImages()
+                    logger.info("Sent status reset for all images")
                 }
             }
         }
