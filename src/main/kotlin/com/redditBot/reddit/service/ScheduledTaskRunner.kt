@@ -1,6 +1,8 @@
 package com.redditBot.reddit.service
 
 import jakarta.annotation.PostConstruct
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.slf4j.Logger
@@ -25,8 +27,8 @@ class ScheduledTaskRunner(
     fun startScheduledTasks() {
         val toPhoneNumber = "whatsapp:$toNumber" // Replace with the destination phone number
         val fromPhoneNumber = "whatsapp:$fromNumber" // Replace with your Twilio phone number
-
-        GlobalScope.launch {
+        val scope = CoroutineScope(Dispatchers.IO)
+        scope.launch {
             logger?.info("Scheduling task to send images via Twilio")
             println("Launching coroutine...") // Add this line
             sendService.scheduleDailyTaskAt(22, 33, ZoneId.of("America/Chicago")) {
