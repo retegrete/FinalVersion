@@ -13,4 +13,8 @@ spring:
     password: 7df09cc85bf47693de6c1e62932ef3360e9443ca66791510e2829479d9fb7805
 server:
   port: 8080
+logging:
+  level:
+    com.com.redditBot: DEBUG
+
 
