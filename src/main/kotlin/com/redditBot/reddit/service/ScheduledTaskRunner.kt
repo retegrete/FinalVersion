@@ -10,43 +10,34 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.time.ZoneId
 import org.slf4j.LoggerFactory
+import org.springframework.scheduling.annotation.Scheduled
+import java.time.LocalDateTime
+
 @Component
 class ScheduledTaskRunner(
     private val sendService: SendService,
 
 // Inject your service here
 ) {
-    private val logger: Logger? = LoggerFactory.getLogger(ScheduledTaskRunner::class.java)
 
     @Value("\${twilio.from}")
     private lateinit var fromNumber: String
 
     @Value("\${twilio.to}")
     private lateinit var toNumber: String
-    @PostConstruct
+    @Scheduled(cron = "0 36 22 * * ?", zone = "America/Chicago")
     fun startScheduledTasks() {
         val toPhoneNumber = "whatsapp:$toNumber" // Replace with the destination phone number
         val fromPhoneNumber = "whatsapp:$fromNumber" // Replace with your Twilio phone number
-        val scope = CoroutineScope(Dispatchers.IO)
-        scope.launch {
-            logger?.info("Scheduling task to send images via Twilio")
-            println("Launching coroutine...") // Add this line
-            val image = sendService.getRandomNonRepeatedImage()
-            if (image != null) {
-                sendService.sendImageUrlViaTwilio(image.url, toPhoneNumber, fromPhoneNumber)
-            }
-            sendService.scheduleDailyTaskAt(23, 25, ZoneId.of("America/Chicago")) {
 
-                if (image != null) {
-                    logger?.info("Sending image with ID: ${image.id} to $toPhoneNumber")
-                    sendService.sendImageUrlViaTwilio(image.url, toPhoneNumber, fromPhoneNumber)
-                    logger?.info("Sent image with ID: ${image.id}")
-                } else {
-                    logger?.info("All images have been sent. Resetting sent status for all images")
-                    sendService.resetSentStatusForAllImages()
-                    logger?.info("Sent status reset for all images")
-                }
-            }
+        println("Task started: ${LocalDateTime.now()}")
+        val image = sendService.getRandomNonRepeatedImage()
+        if (image != null) {
+            sendService.sendImageUrlViaTwilio(image.url, toPhoneNumber, fromPhoneNumber)
+        }
+        println("Task completed: ${LocalDateTime.now()}")
+        fun sendImagesTask() {
+
         }
     }
 }

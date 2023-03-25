@@ -55,7 +55,7 @@ class SendService(private val redditImageRepository: RedditImageRepository) {
         val message = Message.creator(
             PhoneNumber(toPhoneNumber),
             PhoneNumber(fromPhoneNumber),
-            imageUrl
+            "Holi Hermosa :)"
         ).setMediaUrl(listOf(URI.create(imageUrl)))
             .create()
 
