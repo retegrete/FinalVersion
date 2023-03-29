@@ -24,7 +24,7 @@ class ScheduledTaskRunner(
 
         println("Task started: ${LocalDateTime.now()}")
         val image = sendService.getRandomNonRepeatedImage()
-        if (image != null) {
+        if (image != null && image.subreddit == "kittens") {
             sendService.sendImageUrlViaTwilio(image.url, toPhoneNumber, fromPhoneNumber)
         }
         println("Task completed: ${LocalDateTime.now()}")
