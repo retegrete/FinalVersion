@@ -16,6 +16,4 @@ class RedditImageService(
         }
         redditImageRepository.saveAll(redditImages)
     }
-
-    fun getAllImages(): List<RedditImage> = redditImageRepository.findAll()
 }

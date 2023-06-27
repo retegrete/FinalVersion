@@ -5,14 +5,23 @@ twilio:
   authToken: a7c4185b2b3a812fe45b9f3063839984
   from: +5215586359153
   to: +5215529654345
+discord:
+  bot:
+    token: OTUzNDkxNzI0MTY3MTUxNjI2.GLpl7u.0Qua9vjQyVJ7MUvcACKgu44NMcC4rsYrHSoq-E
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://ec2-3-93-160-246.compute-1.amazonaws.com:5432/dfa76n11cuu806
-    username: djreunxsyeqehh
-    password: 7df09cc85bf47693de6c1e62932ef3360e9443ca66791510e2829479d9fb7805
+    url: jdbc:postgresql://ec2-52-45-200-167.compute-1.amazonaws.com:5432/d2lu5ojpkqeedo
+    username: yaahjtxpkafssp
+    password: bb928e22fca0fcbd2f2d83de4552d7a1859a87823c5cdc06707e093c45687ed5
 server:
   port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 logging:
   level:
     com.com.redditBot: DEBUG

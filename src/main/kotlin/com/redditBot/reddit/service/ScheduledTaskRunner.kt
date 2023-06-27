@@ -9,7 +9,6 @@ import java.time.LocalDateTime
 class ScheduledTaskRunner(
     private val sendService: SendService,
 
-// Inject your service here
 ) {
 
     @Value("\${twilio.from}")
@@ -19,14 +18,15 @@ class ScheduledTaskRunner(
     private lateinit var toNumber: String
     @Scheduled(cron = "0 0 10 * * ?", zone = "America/Chicago")
     fun startScheduledTasks() {
-        val toPhoneNumber = "whatsapp:$toNumber" // Replace with the destination phone number
-        val fromPhoneNumber = "whatsapp:$fromNumber" // Replace with your Twilio phone number
+        val toPhoneNumber = "whatsapp:$toNumber"
+        val fromPhoneNumber = "whatsapp:$fromNumber"
 
         println("Task started: ${LocalDateTime.now()}")
         val image = sendService.getRandomNonRepeatedImage()
         if (image != null && image.subreddit == "kittens") {
             sendService.sendImageUrlViaTwilio(image.url, toPhoneNumber, fromPhoneNumber)
+            println("Task completed: ${LocalDateTime.now()}")
         }
-        println("Task completed: ${LocalDateTime.now()}")
+
     }
 }

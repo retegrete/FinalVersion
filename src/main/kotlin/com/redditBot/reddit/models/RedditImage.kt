@@ -14,5 +14,5 @@ data class RedditImage(
     val url: String = "",
     val subreddit: String ="",
     val title: String= "",
-    val sent: Boolean = false
+    var sent: Boolean = false
 )
